@@ -1,8 +1,8 @@
 import * as React from "react";
-import { useReducer, createContext } from "react";
-import Reducer from "./reducer";
+import { useReducer, createContext, useMemo } from "react";
+import Reducer, { Type } from "./reducer";
 
-const IntState: PayLoad = {
+const defaultState = {
   UserEmail: "",
   UserPassword: "",
   EmailTitle: "",
@@ -11,31 +11,32 @@ const IntState: PayLoad = {
   CsvData: [""],
 };
 
-export const Context = createContext({});
-
+export const Context = createContext<UserContext>({
+  state: defaultState,
+  dispatch: () => {},
+});
 export interface UserContext {
-  dispatch: React.Dispatch<string>;
+  dispatch: React.Dispatch<Type>;
   state: PayLoad;
 }
 
 export interface PayLoad {
-  UserEmail: string;
-  UserPassword: string;
-  EmailTitle: string;
-  EmailBody: string;
-  Page: number;
-  CsvData: any[];
+  UserEmail?: string;
+  UserPassword?: string;
+  EmailTitle?: string;
+  EmailBody?: string;
+  Page?: number;
+  CsvData?: any[];
 }
 /**
  * @todo - add types to the any
  */
 
 const UserContext = ({ children }: any) => {
-  const [state, dispatch] = useReducer(Reducer, IntState);
+  const [state, dispatch] = useReducer(Reducer, defaultState);
+  const value = useMemo(() => ({ state, dispatch }), [state]);
 
-  return (
-    <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
-  );
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export default UserContext;
