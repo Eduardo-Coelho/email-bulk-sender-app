@@ -4,7 +4,7 @@ import { Context } from "../../store/context";
 import { Row, Col, Input, Title, Wrapper, Button } from "../../styled";
 
 const UserForm = () => {
-  const [state, dispatch]: any = useContext(Context);
+  const { state, dispatch } = useContext(Context);
 
   const [formstate, setstate] = useState({
     UserEmail: "",
