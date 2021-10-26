@@ -4,8 +4,7 @@ import { Context } from "../../store/context";
 import { Button, Col, Input, Row, Title, Wrapper } from "../../styled";
 
 const CsvInport = () => {
-  const { state, dispatch } = useContext(Context);
-
+  const { dispatch } = useContext(Context);
   const [csvstate, setstate] = useState({
     filename: "",
     file: null,
@@ -15,26 +14,28 @@ const CsvInport = () => {
     /**
      * @todo - add types to the any
      */
+
     const headers = str.slice(0, str.indexOf("\n")).split(delim);
     const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+
     const newArray = rows.map((row: any) => {
       const values = row.split(delim);
-      const eachObject = headers.reduce((obj: any, header: any, i: any) => {
-        obj[header] = values[i];
+      const eachObject = headers.reduce((obj: any, header: string, i: any) => {
+        const h = header.trim();
+        obj[h] = values[i];
+
         return obj;
       }, {});
       return eachObject;
     });
-
-    /**
-     * @todo - one of the array indexs has undefined properties,
-     * I am not sure if it's the csv data format issue or something else.
-     */
+    const arr = newArray.filter(
+      (i: { Name: string; Email: string }) => i.Name && i.Email
+    );
 
     dispatch({
       Action: "UPDATE",
       Payload: {
-        CsvData: newArray,
+        CsvData: arr,
         Page: 2,
       },
     });

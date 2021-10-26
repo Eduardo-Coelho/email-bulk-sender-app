@@ -32,7 +32,7 @@ Jon Smith
 `;
 
 const EmailForm = () => {
-  const { state, dispatch } = useContext(Context);
+  const { state } = useContext(Context);
 
   const [emailstate, setstate] = useState({
     subject: "",
@@ -45,7 +45,7 @@ const EmailForm = () => {
     event.preventDefault();
 
     if (emailstate.subject && emailstate.emailBody && emailstate.signature) {
-      const Email = `
+      const email = `
         <p> ${emailstate.recipientName}</p>
         <p> ${emailstate.emailBody}</p>
         <p> ${emailstate.signature}</p>
@@ -57,13 +57,14 @@ const EmailForm = () => {
           password: state.UserPassword,
         },
         email: {
-          emailBody: Email,
+          emailBody: email,
           subject: emailstate.subject,
         },
         csvData: state.CsvData,
       };
-      await IpcSend(IPCs.SendEmail, emailPatload);
 
+      const stringJson = JSON.stringify(emailPatload);
+      await IpcSend(IPCs.SendEmail, stringJson);
       /**
        * @todo refactored  needed
        */
@@ -88,7 +89,7 @@ const EmailForm = () => {
       <form onSubmit={(event) => submit(event)}>
         <Col>
           <Title>
-            Sent Your Email To {state.CsvData && state.CsvData.length - 1}
+            Sent Your Email To {state.CsvData && state.CsvData.length}
           </Title>
           <Row>
             <Input

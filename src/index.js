@@ -31,18 +31,17 @@ app.on("window-all-closed", () => {
 });
 
 ipcMain.on("send-email", (event, arg) => {
-  const { email, csvData, user } = arg;
+  const par = JSON.parse(arg);
+  const { email, csvData, user } = par;
 
   csvData.forEach((contact) => {
-    if (contact.Email && contact.Name) {
-      SendEmail(email, user, contact)
-        .then((res) => {
-          event.sender.send("reply-email", res);
-        })
-        .catch((err) => {
-          console.log(err);
-          event.sender.send("reply-email", err);
-        });
-    }
+    SendEmail(email, user, contact)
+      .then((res) => {
+        event.sender.send("reply-email", res);
+      })
+      .catch((err) => {
+        console.log(err);
+        event.sender.send("reply-email", err);
+      });
   });
 });

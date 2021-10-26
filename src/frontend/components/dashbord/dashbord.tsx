@@ -6,7 +6,7 @@ import EmailForm from "../email-form/emailform";
 import UserForm from "../user-form/userform";
 
 const DashBord = () => {
-  const { state, dispatch } = useContext(Context);
+  const { state } = useContext(Context);
   /**
    * @todo - add types to the any
    */
