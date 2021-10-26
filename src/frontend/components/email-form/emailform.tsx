@@ -32,7 +32,7 @@ Jon Smith
 `;
 
 const EmailForm = () => {
-  const [state, dispatch]: any = useContext(Context);
+  const { state, dispatch } = useContext(Context);
 
   const [emailstate, setstate] = useState({
     subject: "",
@@ -87,7 +87,9 @@ const EmailForm = () => {
     <Wrapper>
       <form onSubmit={(event) => submit(event)}>
         <Col>
-          <Title> Sent Your Email To {state.CsvData.length - 1} </Title>
+          <Title>
+            Sent Your Email To {state.CsvData && state.CsvData.length - 1}
+          </Title>
           <Row>
             <Input
               placeholder="Subject"
