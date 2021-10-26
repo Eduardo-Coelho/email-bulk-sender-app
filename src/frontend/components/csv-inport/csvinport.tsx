@@ -4,7 +4,7 @@ import { Context } from "../../store/context";
 import { Button, Col, Input, Row, Title, Wrapper } from "../../styled";
 
 const CsvInport = () => {
-  const [state, dispatch]: any = useContext(Context);
+  const { state, dispatch } = useContext(Context);
 
   const [csvstate, setstate] = useState({
     filename: "",
