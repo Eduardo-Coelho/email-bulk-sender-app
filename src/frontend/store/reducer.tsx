@@ -1,11 +1,11 @@
 import { PayLoad } from "./context";
 
-interface Type {
+export interface Type {
   Action: string;
   Payload: PayLoad;
 }
 
-export default function Reducer(state: PayLoad, type: Type) {
+export default function Reducer(state: PayLoad, type: Type): PayLoad {
   const { Action, Payload }: Type = type;
 
   switch (Action) {
