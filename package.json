@@ -2,7 +2,7 @@
   "name": "email-bulk-sender-app",
   "version": "0.5.9",
   "description": "email bulk sender app",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "npm run build && electron .",
     "dev": "concurrently \"tsc -w\" \"electron .\"  ",
