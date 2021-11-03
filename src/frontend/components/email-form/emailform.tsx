@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useContext, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { Context } from "../../store/context";
 import {
   Button,
@@ -41,7 +41,7 @@ const EmailForm = () => {
     signature: "",
   });
 
-  const submit = async (event: any) => {
+  const submit = async (event: FormEvent<Element>) => {
     event.preventDefault();
 
     if (emailstate.subject && emailstate.emailBody && emailstate.signature) {
@@ -53,14 +53,14 @@ const EmailForm = () => {
 
       const emailPatload = {
         user: {
-          email: state.UserEmail,
-          password: state.UserPassword,
+          userEmail: state.userEmail,
+          userPassword: state.userPassword,
         },
-        email: {
+        emailTemp: {
           emailBody: email,
           subject: emailstate.subject,
         },
-        csvData: state.CsvData,
+        csvData: state.csvData,
       };
 
       const stringJson = JSON.stringify(emailPatload);
@@ -78,7 +78,10 @@ const EmailForm = () => {
     }
   };
 
-  const onChange = (event: any, type: string) => {
+  const onChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    type: string
+  ) => {
     const val: string = event.target.value;
 
     setstate({ ...emailstate, [type]: val });
@@ -89,7 +92,7 @@ const EmailForm = () => {
       <form onSubmit={(event) => submit(event)}>
         <Col>
           <Title>
-            Sent Your Email To {state.CsvData && state.CsvData.length}
+            Sent Your Email To {state.csvData && state.csvData.length}
           </Title>
           <Row>
             <Input

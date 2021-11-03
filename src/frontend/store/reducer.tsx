@@ -1,16 +1,16 @@
 import { PayLoad } from "./context";
 
 export interface Type {
-  Action: string;
-  Payload: PayLoad;
+  action: string;
+  payload: PayLoad;
 }
 
 export default function Reducer(state: PayLoad, type: Type): PayLoad {
-  const { Action, Payload }: Type = type;
+  const { action, payload }: Type = type;
 
-  switch (Action) {
+  switch (action) {
     case "UPDATE":
-      const newState = { ...state, ...Payload };
+      const newState = { ...state, ...payload };
       return { ...newState };
 
     default:

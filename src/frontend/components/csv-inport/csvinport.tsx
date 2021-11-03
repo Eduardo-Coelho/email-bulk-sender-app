@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useContext, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { Context } from "../../store/context";
 import { Button, Col, Input, Row, Title, Wrapper } from "../../styled";
 
@@ -10,7 +10,7 @@ const CsvInport = () => {
     file: null,
   });
 
-  const processCSV = (str: any, delim = ",") => {
+  const processCSV = (str: string, delim = ",") => {
     /**
      * @todo - add types to the any
      */
@@ -18,30 +18,32 @@ const CsvInport = () => {
     const headers = str.slice(0, str.indexOf("\n")).split(delim);
     const rows = str.slice(str.indexOf("\n") + 1).split("\n");
 
-    const newArray = rows.map((row: any) => {
+    const newArray = rows.map((row: string) => {
       const values = row.split(delim);
-      const eachObject = headers.reduce((obj: any, header: string, i: any) => {
-        const h = header.trim();
-        obj[h] = values[i];
+      const eachObject = headers.reduce(
+        (obj: any, header: string, i: number) => {
+          const h = header.trim().toLowerCase();
+          obj[h] = values[i];
 
-        return obj;
-      }, {});
+          return obj;
+        },
+        {}
+      );
       return eachObject;
     });
     const arr = newArray.filter(
-      (i: { Name: string; Email: string }) => i.Name && i.Email
+      (i: { name: string; email: string }) => i.name && i.email
     );
-
     dispatch({
-      Action: "UPDATE",
-      Payload: {
-        CsvData: arr,
-        Page: 2,
+      action: "UPDATE",
+      payload: {
+        csvData: arr,
+        page: 2,
       },
     });
   };
 
-  const submit = (event: any) => {
+  const submit = (event: FormEvent<Element>) => {
     /**
      * @todo - add types to the any
      */
@@ -51,23 +53,25 @@ const CsvInport = () => {
       const reader = new FileReader();
       reader.onload = function (e) {
         const text = e?.target?.result;
-        processCSV(text);
+        if (typeof text === "string") processCSV(text);
       };
       reader.readAsText(file);
     }
   };
 
-  const onChange = (event: any) => {
+  const onChange = (event: ChangeEvent<any>) => {
     /**
      * @todo - add types to the any
      */
-    const fileName: string = event?.target?.files[0]?.name;
-    if (fileName && fileName.includes(".csv")) {
-      setstate({
-        ...csvstate,
-        file: event?.target?.files[0],
-        filename: fileName,
-      });
+    if (event && event?.target && event?.target?.files) {
+      const fileName: string = event?.target?.files[0]?.name;
+      if (fileName && fileName.includes(".csv")) {
+        setstate({
+          ...csvstate,
+          file: event?.target?.files[0],
+          filename: fileName,
+        });
+      }
     }
   };
 

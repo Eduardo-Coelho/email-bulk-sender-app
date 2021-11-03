@@ -3,12 +3,12 @@ import { useReducer, createContext, useMemo } from "react";
 import Reducer, { Type } from "./reducer";
 
 const defaultState = {
-  UserEmail: "",
-  UserPassword: "",
-  EmailTitle: "",
-  EmailBody: "",
-  Page: 0,
-  CsvData: [""],
+  userEmail: "",
+  userPassword: "",
+  emailTitle: "",
+  emailBody: "",
+  page: 0,
+  csvData: [],
 };
 
 export const Context = createContext<UserContext>({
@@ -20,13 +20,18 @@ export interface UserContext {
   state: PayLoad;
 }
 
+export interface CsvData {
+  email: string;
+  name: string;
+}
+
 export interface PayLoad {
-  UserEmail?: string;
-  UserPassword?: string;
-  EmailTitle?: string;
-  EmailBody?: string;
-  Page?: number;
-  CsvData?: any[];
+  userEmail?: string;
+  userPassword?: string;
+  emailTitle?: string;
+  emailBody?: string;
+  page?: number;
+  csvData?: CsvData[];
 }
 /**
  * @todo - add types to the any

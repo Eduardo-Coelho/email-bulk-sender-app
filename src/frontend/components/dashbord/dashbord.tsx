@@ -12,9 +12,9 @@ const DashBord = () => {
    */
   return (
     <>
-      {state.Page === 0 && <UserForm />}
-      {state.Page === 1 && <CsvInport />}
-      {state.Page === 2 && <EmailForm />}
+      {state.page === 0 && <UserForm />}
+      {state.page === 1 && <CsvInport />}
+      {state.page === 2 && <EmailForm />}
     </>
   );
 };
