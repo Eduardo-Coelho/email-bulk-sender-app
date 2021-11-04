@@ -14,25 +14,12 @@ import {
 } from "../../styled";
 import { IPCs, IpcSend } from "../../utils/ipc";
 
-/**
- * @todo refactored  needed
- */
-
-const EmailBodyplaceholder = `**Example text**
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-<br /> <br /> 
-when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-<br /> <br />
-It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-**Example text**
-`;
-
-const EmaiSignatureyplaceholder = `Kind Regards,<br /> 
-Jon Smith
+const EmaiSignatureyplaceholder = `Kind Regards,
+Name
 `;
 
 const EmailForm = () => {
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
 
   const [emailstate, setstate] = useState({
     subject: "",
@@ -43,12 +30,11 @@ const EmailForm = () => {
 
   const submit = async (event: FormEvent<Element>) => {
     event.preventDefault();
-
     if (emailstate.subject && emailstate.emailBody && emailstate.signature) {
       const email = `
         <p> ${emailstate.recipientName}</p>
-        <p> ${emailstate.emailBody}</p>
-        <p> ${emailstate.signature}</p>
+         <p>${newLine(emailstate.emailBody)}</p>
+        <p> ${newLine(emailstate.signature)}</p>
       `;
 
       const emailPatload = {
@@ -65,9 +51,6 @@ const EmailForm = () => {
 
       const stringJson = JSON.stringify(emailPatload);
       await IpcSend(IPCs.SendEmail, stringJson);
-      /**
-       * @todo refactored  needed
-       */
 
       setstate({
         subject: "",
@@ -75,7 +58,19 @@ const EmailForm = () => {
         emailBody: "",
         signature: "",
       });
+
+      dispatch({
+        action: "UPDATE",
+        payload: {
+          csvData: [],
+          page: 0,
+        },
+      });
     }
+  };
+
+  const newLine = (input: string) => {
+    return input.replace(/\r\n|\r|\n/g, "<br />");
   };
 
   const onChange = (
@@ -108,8 +103,8 @@ const EmailForm = () => {
           </Row>
           <Label> Email Body: </Label>
           <Textarea
+            rows={3}
             onChange={(event) => onChange(event, "emailBody")}
-            placeholder={EmailBodyplaceholder}
           />
 
           <Label> Signature: </Label>

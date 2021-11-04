@@ -47,6 +47,7 @@ export const Input = styled.input`
 `;
 
 export const Textarea = styled.textarea`
+  white-space: pre-wrap;
   font-size: 15px;
   padding: 10px;
   margin: 10px 0 10px 0;
@@ -63,6 +64,7 @@ export const Textarea = styled.textarea`
   box-shadow: 0 1px 2px #ccc;
 `;
 export const Signature = styled.textarea`
+  white-space: pre-wrap;
   font-size: 15px;
   font-weight: bold;
   padding: 10px;
