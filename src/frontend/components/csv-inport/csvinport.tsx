@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
-import { Context } from "../../store/context";
+import { Context, CsvData } from "../../store/context";
 import { Button, Col, Input, Row, Title, Wrapper } from "../../styled";
 
 const CsvInport = () => {
@@ -12,7 +12,7 @@ const CsvInport = () => {
 
   const processCSV = (str: string, delim = ",") => {
     /**
-     * @todo - add types to the any
+     * @todo - CSV File Validator
      */
 
     const headers = str.slice(0, str.indexOf("\n")).split(delim);
@@ -31,22 +31,17 @@ const CsvInport = () => {
       );
       return eachObject;
     });
-    const arr = newArray.filter(
-      (i: { name: string; email: string }) => i.name && i.email
-    );
+    const validateCsv = newArray.filter((i: CsvData) => i.name && i.email);
     dispatch({
       action: "UPDATE",
       payload: {
-        csvData: arr,
+        csvData: validateCsv,
         page: 2,
       },
     });
   };
 
   const submit = (event: FormEvent<Element>) => {
-    /**
-     * @todo - add types to the any
-     */
     event.preventDefault();
     if (csvstate.file) {
       const file = csvstate.file;
