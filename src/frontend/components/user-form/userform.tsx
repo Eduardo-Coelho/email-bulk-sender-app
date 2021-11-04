@@ -25,6 +25,13 @@ const UserForm = () => {
     setstate({ ...formstate, [type]: val });
   };
 
+  const validate = (): boolean => {
+    const emailRegex = /^\S+@\S+\.\S+$/g;
+    return (
+      emailRegex.test(formstate.userEmail) && formstate.userPassword.length >= 3
+    );
+  };
+
   return (
     <Wrapper>
       <form onSubmit={(event) => submit(event)}>
@@ -43,13 +50,7 @@ const UserForm = () => {
             />
           </Row>
           <Row>
-            <Button
-              type="submit"
-              disabled={
-                formstate.userEmail.length < 3 ||
-                formstate.userPassword.length < 3
-              }
-            >
+            <Button type="submit" disabled={!validate()}>
               Submit
             </Button>
           </Row>
