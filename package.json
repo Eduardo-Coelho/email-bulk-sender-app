@@ -2,14 +2,16 @@
   "name": "email-bulk-sender-app",
   "version": "0.5.9",
   "description": "email bulk sender app",
+  "author": "Eduardo Coelho",
   "main": "dist/index.js",
   "scripts": {
     "start": "npm run build && electron .",
     "dev": "concurrently \"tsc -w\" \"electron .\"  ",
-    "build": "tsc"
+    "build": "tsc",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "keywords": [],
-  "author": "Eduardo Coelho",
   "license": "ISC",
   "devDependencies": {
     "@types/react": "^17.0.19",
@@ -25,5 +27,26 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "styled-components": "^5.3.3"
-  }
+  },
+
+  "build": {
+    "appId": "com.ec.tech",
+    "productName": "email-bulk-sender-app",
+    "copyright": "",
+    "directories": {
+        "output": "build",
+        "buildResources": "build-res"
+    },
+    "files": [
+        "package.json",
+        "dist/**/*",
+        "index.html",
+        "node_modules"
+    ],
+    "win": {
+        "target": "nsis"
+    }
+
+}
+
 }
