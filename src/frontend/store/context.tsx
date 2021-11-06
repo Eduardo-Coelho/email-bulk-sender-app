@@ -1,22 +1,54 @@
 import * as React from "react";
 import { useReducer, createContext, useMemo } from "react";
-import Reducer, { Type } from "./reducer";
+import Reducer, { IncomingState } from "./reducer";
 
-const defaultState = {
-  userEmail: "",
-  userPassword: "",
-  emailTitle: "",
-  emailBody: "",
-  page: 0,
-  csvData: [],
+export enum SectionName {
+  userformData = "userformData",
+  csvinportData = "csvinportData",
+  emailformData = "emailformData",
+}
+
+const defaultSections = [
+  {
+    step: 1,
+    sectionName: SectionName.userformData,
+    info: "Add Your Details",
+    complete: true,
+    userEmail: "",
+    userPassword: "",
+  },
+  {
+    step: 2,
+    sectionName: SectionName.csvinportData,
+    info: "Import Your CSV File",
+    complete: false,
+    csvData: [],
+    filename: "",
+    file: null,
+  },
+  {
+    step: 3,
+    sectionName: SectionName.emailformData,
+    info: "Sent Your Email",
+    complete: false,
+    subject: "",
+    recipientName: "Hi FLAG_NAME",
+    emailBody: "",
+    signature: "",
+  },
+];
+
+export const defaultPayLoad = {
+  page: 1,
+  section: defaultSections,
 };
 
 export const Context = createContext<UserContext>({
-  state: defaultState,
+  state: defaultPayLoad,
   dispatch: () => {},
 });
 export interface UserContext {
-  dispatch: React.Dispatch<Type>;
+  dispatch: React.Dispatch<IncomingState>;
   state: PayLoad;
 }
 
@@ -25,20 +57,32 @@ export interface CsvData {
   name: string;
 }
 
-export interface PayLoad {
+export interface Section {
+  step?: number;
+  sectionName?: SectionName;
+  info?: string;
+  complete?: boolean;
   userEmail?: string;
   userPassword?: string;
-  emailTitle?: string;
-  emailBody?: string;
-  page?: number;
   csvData?: CsvData[];
+  filename?: string;
+  file?: null;
+  subject?: string;
+  recipientName?: string;
+  emailBody?: string;
+  signature?: string;
+}
+
+export interface PayLoad {
+  page: number;
+  section: Section[];
 }
 /**
  * @todo - add types to the any
  */
 
 const UserContext = ({ children }: any) => {
-  const [state, dispatch] = useReducer(Reducer, defaultState);
+  const [state, dispatch] = useReducer(Reducer, defaultPayLoad);
   const value = useMemo(() => ({ state, dispatch }), [state]);
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

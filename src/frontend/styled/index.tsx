@@ -1,5 +1,30 @@
 import styled from "styled-components";
 
+export interface IBoxProps {
+  padding?: string;
+  margin?: string;
+  textAlign?: string;
+  borderTop?: boolean;
+  borderBottom?: boolean;
+  border?: boolean;
+}
+export interface IBoxWidthProps {
+  width: string;
+}
+
+export const Box = styled.div<IBoxProps>`
+  padding: ${(props) => props.padding || 0};
+  margin: ${(props) => props.margin || 0};
+  text-align: ${(props) => props.textAlign || "auto"};
+  border-top: ${(props) => (props.borderTop ? "1px solid #DBDDE0" : "")};
+  border-bottom: ${(props) => (props.borderBottom ? "1px solid #DBDDE0" : "")};
+  border: ${(props) => (props.border ? "1px solid #DBDDE0" : "")};
+`;
+
+export const WidthBox = styled.div<IBoxWidthProps>`
+  width: ${(props) => props.width || 0};
+`;
+
 export const Title = styled.h1`
   font-size: 2.5em;
   text-align: center;
@@ -101,4 +126,8 @@ export const Button = styled.button`
     color: #ffffff;
     box-shadow: none;
   }
+`;
+
+export const ProgressNavWrapper = styled.nav`
+  justify-content: center;
 `;

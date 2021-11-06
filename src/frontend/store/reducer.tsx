@@ -1,17 +1,27 @@
-import { PayLoad } from "./context";
+import { defaultPayLoad, PayLoad, Section } from "./context";
 
-export interface Type {
+export interface IncomingState {
   action: string;
-  payload: PayLoad;
+  section: Section;
+  page: number;
 }
 
-export default function Reducer(state: PayLoad, type: Type): PayLoad {
-  const { action, payload }: Type = type;
+export default function Reducer(
+  currentState: PayLoad,
+  incomingState: IncomingState
+): PayLoad {
+  const { action, section, page }: IncomingState = incomingState;
 
   switch (action) {
     case "UPDATE":
-      const newState = { ...state, ...payload };
-      return { ...newState };
+      const updateSection = currentState.section.filter(
+        (s: Section) => s.sectionName !== section.sectionName
+      );
+      updateSection.push({ ...section });
+      return { section: updateSection, page: page };
+
+    case "CLEAR":
+      return { ...defaultPayLoad };
 
     default:
       throw new Error();
