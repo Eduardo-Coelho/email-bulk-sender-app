@@ -21,8 +21,10 @@ export async function SendEmail(
   contact: Contact
 ) {
   const { name, email } = contact;
+  const rg = /(?<=@)[^.]+(?=\.)/gm;
+  const domain = rg.exec(user.userEmail) || "gmail";
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: domain[0],
     auth: {
       user: user.userEmail,
       pass: user.userPassword,
