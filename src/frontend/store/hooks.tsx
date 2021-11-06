@@ -2,6 +2,11 @@ import { useContext } from "react";
 import { convertArrayToObject } from "../utils/helperfuc";
 import { Context, Section, SectionName } from "./context";
 
+export const getAll = () => {
+  const { state } = useContext(Context);
+  return state;
+};
+
 export const getUserformDataSection = () => {
   const { state } = useContext(Context);
   const get = state.section.filter(
@@ -39,7 +44,9 @@ export const clearState = () => {
   return () =>
     dispatch({
       action: "CLEAR",
-      section: {},
+      section: {
+        step: 1,
+      },
       page: 1,
     });
 };

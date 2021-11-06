@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export interface IBoxProps {
+interface BoxProps {
   padding?: string;
   margin?: string;
   textAlign?: string;
@@ -8,11 +8,14 @@ export interface IBoxProps {
   borderBottom?: boolean;
   border?: boolean;
 }
-export interface IBoxWidthProps {
+interface BoxWidthProps {
   width: string;
 }
+interface CircleProps {
+  complete: boolean;
+}
 
-export const Box = styled.div<IBoxProps>`
+export const Box = styled.div<BoxProps>`
   padding: ${(props) => props.padding || 0};
   margin: ${(props) => props.margin || 0};
   text-align: ${(props) => props.textAlign || "auto"};
@@ -21,12 +24,51 @@ export const Box = styled.div<IBoxProps>`
   border: ${(props) => (props.border ? "1px solid #DBDDE0" : "")};
 `;
 
-export const WidthBox = styled.div<IBoxWidthProps>`
+export const WidthBox = styled.div<BoxWidthProps>`
   width: ${(props) => props.width || 0};
 `;
 
+const complete = css`
+  background-color: #52bdb7;
+`;
+const notcomplete = css`
+  background-color: #ffffff;
+`;
+
+export const Circle = styled.div<{ complete: any }>`
+  padding: 15px;
+  border-radius: 50%;
+  border: 1px solid #e4e4e4;
+  ${(props) => {
+    if (props.complete) {
+      return complete;
+    }
+    if (!props.complete) {
+      return notcomplete;
+    }
+  }}
+`;
+
+export const Line = styled.div<{ complete: any }>`
+  padding: 8px 32px 0px 39px;
+  margin: 11px 0px 0px -1px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  ${(props) => {
+    if (props.complete) {
+      return complete;
+    }
+    if (!props.complete) {
+      return notcomplete;
+    }
+  }}
+`;
+
+export const BreadCrumbs = styled.small``;
+
 export const Title = styled.h1`
-  font-size: 2.5em;
+  font-size: 1.5em;
   text-align: center;
   color: #585858;
   font-weight: bold;
@@ -58,9 +100,10 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-  font-size: 18px;
+  font-size: 15px;
   padding: 10px;
   margin: 10px;
+  width: 100%;
   background: #ffffff;
   border: none;
   border-radius: 3px;
@@ -107,7 +150,7 @@ export const Signature = styled.textarea`
 `;
 
 export const Button = styled.button`
-  background: #0b65db;
+  background-color: #52bdb7;
   color: #fff;
   width: 200px;
   font-size: 1rem;
@@ -129,5 +172,5 @@ export const Button = styled.button`
 `;
 
 export const ProgressNavWrapper = styled.nav`
-  justify-content: center;
+  margin: 20px;
 `;

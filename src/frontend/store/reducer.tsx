@@ -18,6 +18,7 @@ export default function Reducer(
         (s: Section) => s.sectionName !== section.sectionName
       );
       updateSection.push({ ...section });
+      const sort = updateSection.sort((a, b) => a.step - b.step);
       return { section: updateSection, page: page };
 
     case "CLEAR":

@@ -13,7 +13,7 @@ const defaultSections = [
     step: 1,
     sectionName: SectionName.userformData,
     info: "Add Your Details",
-    complete: true,
+    complete: false,
     userEmail: "",
     userPassword: "",
   },
@@ -58,7 +58,7 @@ export interface CsvData {
 }
 
 export interface Section {
-  step?: number;
+  step: number;
   sectionName?: SectionName;
   info?: string;
   complete?: boolean;
