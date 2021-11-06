@@ -1,6 +1,12 @@
 import * as React from "react";
-import { ChangeEvent, FormEvent, useContext, useState } from "react";
-import { Context } from "../../store/context";
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import { Section, SectionName } from "../../store/context";
+
+import {
+  clearState,
+  getCsvinportDataSection,
+  getUserformDataSection,
+} from "../../store/hooks";
 import {
   Button,
   Col,
@@ -19,9 +25,15 @@ Name
 `;
 
 const EmailForm = () => {
-  const { state, dispatch } = useContext(Context);
+  const { userformData } = getUserformDataSection();
+  const { csvinportData } = getCsvinportDataSection();
+  const clear = clearState();
 
-  const [emailstate, setstate] = useState({
+  const [emailstate, setstate] = useState<Section>({
+    step: 3,
+    sectionName: SectionName.emailformData,
+    info: "Sent Your Email",
+    complete: false,
     subject: "",
     recipientName: "Hi FLAG_NAME",
     emailBody: "",
@@ -39,33 +51,18 @@ const EmailForm = () => {
 
       const emailPatload = {
         user: {
-          userEmail: state.userEmail,
-          userPassword: state.userPassword,
+          userEmail: userformData.userEmail,
+          userPassword: userformData?.userPassword,
         },
         emailTemp: {
           emailBody: email,
           subject: emailstate.subject,
         },
-        csvData: state.csvData,
+        csvData: csvinportData?.csvData,
       };
-
       const stringJson = JSON.stringify(emailPatload);
       await IpcSend(IPCs.SendEmail, stringJson);
-
-      setstate({
-        subject: "",
-        recipientName: "Hi FLAG_NAME",
-        emailBody: "",
-        signature: "",
-      });
-
-      dispatch({
-        action: "UPDATE",
-        payload: {
-          csvData: [],
-          page: 0,
-        },
-      });
+      clear();
     }
   };
 
@@ -87,7 +84,7 @@ const EmailForm = () => {
       <form onSubmit={(event) => submit(event)}>
         <Col>
           <Title>
-            Sent Your Email To {state.csvData && state.csvData.length}
+            Sent Your Email To {csvinportData && csvinportData.csvData?.length}
           </Title>
           <Row>
             <Input

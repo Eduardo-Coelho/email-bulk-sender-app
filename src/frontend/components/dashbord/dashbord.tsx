@@ -1,20 +1,25 @@
 import * as React from "react";
-import { useContext } from "react";
-import { Context } from "../../store/context";
+import { useEffect, useState } from "react";
+import { getPage } from "../../store/hooks";
 import CsvInport from "../csv-inport/csvinport";
 import EmailForm from "../email-form/emailform";
+import ProgressNav from "../progress-nav/progressnav";
 import UserForm from "../user-form/userform";
 
 const DashBord = () => {
-  const { state } = useContext(Context);
-  /**
-   * @todo - add types to the any
-   */
+  const [page, setPage] = useState<number>(0);
+  const currentPage = getPage();
+
+  useEffect(() => {
+    setPage(currentPage);
+  }, [currentPage]);
+
   return (
     <>
-      {state.page === 0 && <UserForm />}
-      {state.page === 1 && <CsvInport />}
-      {state.page === 2 && <EmailForm />}
+      <ProgressNav />
+      {page === 1 && <UserForm />}
+      {page === 2 && <CsvInport />}
+      {page === 3 && <EmailForm />}
     </>
   );
 };

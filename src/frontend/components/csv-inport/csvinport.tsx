@@ -1,11 +1,16 @@
 import * as React from "react";
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
-import { Context, CsvData } from "../../store/context";
+import { Context, CsvData, Section, SectionName } from "../../store/context";
 import { Button, Col, Input, Row, Title, Wrapper } from "../../styled";
 
 const CsvInport = () => {
   const { dispatch } = useContext(Context);
-  const [csvstate, setstate] = useState({
+  const [csvstate, setstate] = useState<Section>({
+    step: 2,
+    sectionName: SectionName.csvinportData,
+    info: "Import Your CSV File",
+    complete: true,
+    csvData: [],
     filename: "",
     file: null,
   });
@@ -31,13 +36,14 @@ const CsvInport = () => {
       );
       return eachObject;
     });
-    const validateCsv = newArray.filter((i: CsvData) => i.name && i.email);
+    const validateCsv: CsvData[] = newArray.filter(
+      (i: CsvData) => i.name && i.email
+    );
+
     dispatch({
       action: "UPDATE",
-      payload: {
-        csvData: validateCsv,
-        page: 2,
-      },
+      section: { ...csvstate, csvData: validateCsv },
+      page: 3,
     });
   };
 
