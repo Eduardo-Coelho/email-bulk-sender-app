@@ -1,6 +1,7 @@
 <h1 align="center">Email Bulk Sender</h1>
 
-![]<img src="./demo/email.png" width="400" height="400">
+<img src="./demo/email.png" width="700" height="200">
+
 # Project Description
 
 The Email Bulk Sender is a simple electron app that enables you to send emails in bulk, to a given list of recipients loaded by a CSV.
