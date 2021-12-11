@@ -5,11 +5,9 @@
   "author": "Eduardo Coelho",
   "main": "dist/index.js",
   "scripts": {
-    "start": "npm run build && electron .",
-    "dev": "concurrently \"tsc -w\" \"electron .\"  ",
     "build": "tsc",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dev": "concurrently \"tsc -w\" \"electron .\"  ",
+    "pack": "electron-builder --dir"
   },
   "keywords": [],
   "license": "ISC",
