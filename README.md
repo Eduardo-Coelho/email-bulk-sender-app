@@ -1,6 +1,6 @@
 <h1 align="center">Email Bulk Sender</h1>
 
-<img src="./demo/email.png" width="700" height="200">
+<img align="center" src="./demo/email.png" width="600" height="200">
 
 # Project Description
 
