@@ -1,6 +1,6 @@
 <h1 align="center">Email Bulk Sender</h1>
 
-![](/demo/email.png =450x450)
+![]<img src="https://email-bulk-sender-app/demo/email.png" width="400" height="400">
 # Project Description
 
 The Email Bulk Sender is a simple electron app that enables you to send emails in bulk, to a given list of recipients loaded by a CSV.
@@ -38,10 +38,10 @@ Run the command below first to build the app.
 ### `npm run build`
 
 After successfully building the app you can run the below command to run the app locally.
-### `"npm run dev`
+### `npm run dev`
 
 To package the app into an executable, run the command below but make sure that you run npm run build first before doing this.
-### `"npm run pack`
+### `npm run pack`
 
 ## 🤝 Support
 
