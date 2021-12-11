@@ -1,6 +1,6 @@
 <h1 align="center">Email Bulk Sender</h1>
 
-<img src="./demo/email.png" width="820" height="200">
+<img src="./demo/email.png" width="830" height="200">
 
 # Project Description
 
@@ -21,15 +21,15 @@ Built With
 
 - Add your email and password, those details will not be saved locally or remotely - the user data only exists has an instance in the react state and will clear after you send the email or if you close the app, refresh etc.
 
-![](/demo/part2.png =450x450)
+<img src="./demo/part2.png" width="400" height="400">
 
 - Add the CSV file that contains a list of contacts - it's important that the CSV file is formatted the same way as on the screenshot with a name an email Heather. please note that I haven't added any validation for CSV Injection as it is not needed for this project.
 
-![](/demo/part4.png =450x450)
+<img src="./demo/part4.png" width="400" height="400">
 
 - Then finally write an email that you want to send to your list of contacts - if you want to change the greeting from hi to good morning or anything else don't forget to add the FLAG_NAME that is going to be replaced by the name of the contact.
 
-![](/demo/part5.png =450x450)
+<img src="./demo/part5.png" width="400" height="400">
 
 ## Available Commands
 
