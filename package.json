@@ -1,6 +1,6 @@
 {
   "name": "email-bulk-sender-app",
-  "version": "0.5.9",
+  "version": "1.0.0",
   "description": "email bulk sender app",
   "author": "Eduardo Coelho",
   "main": "dist/index.js",
